@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useTransition } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,11 +20,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
-import { useState, useTransition } from "react";
 
 export function LoginForm() {
   const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
+  // const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -35,12 +35,12 @@ export function LoginForm() {
 
   function onSubmit(values: z.infer<typeof LoginSchema>) {
     setError("");
-    setSuccess("");
+    // setSuccess("");
 
     startTransition(() => {
       login(values).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
+        setError(data?.error);
+        // setSuccess(data?.success);
       });
     });
   }
@@ -95,7 +95,7 @@ export function LoginForm() {
               />
             </div>
             <FormError message={error} />
-            <FormSuccess message={success} />
+            {/* <FormSuccess message={success} /> */}
             <Button disabled={isPending} type="submit" className="w-full">
               Login
             </Button>

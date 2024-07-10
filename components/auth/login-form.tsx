@@ -30,7 +30,7 @@ export function LoginForm() {
       : "";
 
   const [error, setError] = useState<string | undefined>("");
-  // const [success, setSuccess] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -42,12 +42,12 @@ export function LoginForm() {
 
   function onSubmit(values: z.infer<typeof LoginSchema>) {
     setError("");
-    // setSuccess("");
+    setSuccess("");
 
     startTransition(() => {
       login(values).then((data) => {
         setError(data?.error);
-        // setSuccess(data?.success);
+        setSuccess(data?.success);
       });
     });
   }
@@ -102,7 +102,7 @@ export function LoginForm() {
               />
             </div>
             <FormError message={error || urlError} />
-            {/* <FormSuccess message={success} /> */}
+            <FormSuccess message={success} />
             <Button disabled={isPending} type="submit" className="w-full">
               Login
             </Button>

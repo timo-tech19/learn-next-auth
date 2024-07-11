@@ -10,6 +10,18 @@ export async function sendVerificationEmail(email: string, token: string) {
     to: email,
     subject: "Verify your email address",
     text: `Please click the following link to verify your email: ${confirmLink}`,
-    html: `<p>Please click the following link to verify your email:</p><a href="${confirmLink}">${confirmLink}</a>`,
+    html: `<p>Please click the following link to verify your email:</p><a href="${confirmLink}">Verify Email</a>`,
+  });
+}
+
+export async function sendPasswordResetEmail(email: string, token: string) {
+  const resetLink = `http://localhost:3000/auth/new-password?token=${token}`;
+
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: email,
+    subject: "Reset your password",
+    text: `Please click the following link to reset your password: ${resetLink}`,
+    html: `<p>Please click the following link to reset your password:</p><a href="${resetLink}">Reset Email</a>`,
   });
 }
